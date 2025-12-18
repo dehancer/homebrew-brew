@@ -20,8 +20,8 @@ class ZstdAT157 < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "lz4"
-  depends_on "xz"
+  depends_on "lz4@dehancer"
+  depends_on "xz@dehancer"
 
   uses_from_macos "zlib"
 

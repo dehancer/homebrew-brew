@@ -16,7 +16,7 @@ class GiflibDehancer < Formula
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
     system "make", "all"
     system "make", "install", "PREFIX=#{prefix}"
-    system "rm", "-f", "#{prefix}/lib/libgif*dylib"
+    rm_f Dir[lib/"libgif*.dylib"]
   end
 
   test do

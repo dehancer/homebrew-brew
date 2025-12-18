@@ -44,6 +44,8 @@ class LibzipDehancer < Formula
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
+
+    inreplace lib/"pkgconfig/libzip.pc", prefix, opt_prefix
   end
 
   test do

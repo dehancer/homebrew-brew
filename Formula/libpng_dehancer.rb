@@ -29,7 +29,7 @@ class LibpngDehancer < Formula
     system "make", "install"
 
     # Avoid rebuilds of dependants that hardcode this path.
-    inreplace lib/"pkgconfig/libpng.pc", prefix, opt_prefix
+    inreplace [ lib/"pkgconfig/libpng.pc", lib/"pkgconfig/libpng16.pc"], prefix, opt_prefix
   end
 
   test do

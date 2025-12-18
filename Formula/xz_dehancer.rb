@@ -1,4 +1,4 @@
-class XzAT582 < Formula
+class XzDehancer < Formula
   desc "General-purpose data compression with high compression ratio"
   homepage "https://tukaani.org/xz/"
   url "https://github.com/tukaani-project/xz/releases/download/v5.8.2/xz-5.8.2.tar.gz"

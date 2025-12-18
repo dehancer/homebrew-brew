@@ -1,4 +1,4 @@
-class ZstdAT157 < Formula
+class ZstdDehancer < Formula
   desc "Zstandard is a real-time compression algorithm"
   homepage "https://facebook.github.io/zstd/"
   url "https://github.com/facebook/zstd/archive/refs/tags/v1.5.7.tar.gz"

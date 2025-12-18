@@ -1,4 +1,4 @@
-class Lz4AT1100 < Formula
+class Lz4Dehancer < Formula
   desc "Extremely Fast Compression algorithm"
   homepage "https://lz4.github.io/lz4/"
   url "https://github.com/lz4/lz4/archive/refs/tags/v1.10.0.tar.gz"

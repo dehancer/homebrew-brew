@@ -1,4 +1,4 @@
-class LibzipAT1114 < Formula
+class LibzipDehancer < Formula
   desc "C library for reading, creating, and modifying zip archives"
   homepage "https://libzip.org/"
   url "https://libzip.org/download/libzip-1.11.4.tar.xz"
@@ -13,8 +13,8 @@ class LibzipAT1114 < Formula
   no_autobump! because: "unable to get versions"
 
   depends_on "cmake" => :build
-  depends_on "xz"
-  depends_on "zstd"
+  depends_on "xz_dehancer"
+  depends_on "zstd_dehancer"
 
   uses_from_macos "zip" => :test
   uses_from_macos "bzip2"

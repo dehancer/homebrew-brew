@@ -12,11 +12,6 @@ class GiflibDehancer < Formula
 
   no_autobump! because: :requires_manual_review
 
-  # Move logo resizing to be a prereq for giflib website only, so that imagemagick is not required to build package
-  # Remove this patch once the upstream fix is released:
-  # https://sourceforge.net/p/giflib/code/ci/d54b45b0240d455bbaedee4be5203d2703e59967/
-  patch :DATA
-
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
     system "make", "all"

@@ -31,7 +31,7 @@ class JpegTurboDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    args = ["-DWITH_JPEG8=1", "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,#{rpath}", "-DBUILD_SHARED_LIBS=OFF"]
+    args = ["-DWITH_JPEG8=1", "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,#{rpath}", "-DBUILD_SHARED_LIBS=OFF","-DENABLE_SHARED=OFF", "-DENABLE_STATIC=ON"]
     if Hardware::CPU.arm? && OS.mac?
       if MacOS.version >= :ventura
         # https://github.com/libjpeg-turbo/libjpeg-turbo/issues/709

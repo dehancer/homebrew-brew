@@ -28,8 +28,6 @@ class LibtiffDehancer < Formula
       --with-jpeg-include-dir=#{Formula["jpeg-turbo"].opt_include}
       --with-jpeg-lib-dir=#{Formula["jpeg-turbo"].opt_lib}
       --without-x
-      --disable-shared
-      --enable-static
     ]
     system "./configure", *args
     system "make", "install"

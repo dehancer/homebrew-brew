@@ -15,7 +15,7 @@ class Lz4AT1100 < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    system "make", "install", "PREFIX=#{prefix}"
+    system "make", "install", "PREFIX=#{prefix}", "BUILD_SHARED=0"
     # Prevent dependents from hardcoding Cellar paths.
     inreplace lib/"pkgconfig/liblz4.pc", prefix, opt_prefix
   end

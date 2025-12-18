@@ -15,7 +15,7 @@ class XzDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    system "./configure", *std_configure_args, "--disable-silent-rules", "--disable-nls"
+    system "./configure", *std_configure_args, "--disable-silent-rules", "--disable-nls", "--disable-shared"
     system "make", "check"
     system "make", "install"
   end

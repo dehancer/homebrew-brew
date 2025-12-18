@@ -38,7 +38,7 @@ class WebpDehancer < Formula
     lib.install buildpath.glob("static/*.a")
 
     # Avoid rebuilding dependents that hard-code the prefix.
-    inreplace (lib/"pkgconfig").glob("*.pc"), prefix, opt_prefix
+    # inreplace (lib/"pkgconfig").glob("*.pc"), prefix, opt_prefix
   end
 
   test do

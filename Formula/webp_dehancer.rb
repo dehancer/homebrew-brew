@@ -35,6 +35,21 @@ class WebpDehancer < Formula
     system "cmake", "--build", "static"
     system "cmake", "--install", "static"
     lib.install buildpath.glob("static/*.a")
+
+    inreplace [
+      lib/"pkgconfig/libsharpyuv.pc",
+      lib/"pkgconfig/libwebp.pc",
+      lib/"pkgconfig/libwebpdecoder.pc",
+      lib/"pkgconfig/libwebpdemux.pc",
+      lib/"pkgconfig/libwebpmux.pc"
+    ], prefix, opt_prefix
+    inreplace [
+      lib/"pkgconfig/libsharpyuv.pc",
+      lib/"pkgconfig/libwebp.pc",
+      lib/"pkgconfig/libwebpdecoder.pc",
+      lib/"pkgconfig/libwebpdemux.pc",
+      lib/"pkgconfig/libwebpmux.pc"
+    ], "-lwebp", "-lsharpyuv -lwebp"
   end
 
   test do

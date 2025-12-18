@@ -43,8 +43,8 @@ class WebpDehancer < Formula
       lib/"pkgconfig/libwebpdemux.pc",
       lib/"pkgconfig/libwebpmux.pc"
     ], prefix, opt_prefix
+
     inreplace [
-      lib/"pkgconfig/libsharpyuv.pc",
       lib/"pkgconfig/libwebp.pc",
       lib/"pkgconfig/libwebpdecoder.pc",
       lib/"pkgconfig/libwebpdemux.pc",

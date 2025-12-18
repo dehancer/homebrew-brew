@@ -21,9 +21,6 @@ class WebpDehancer < Formula
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
     ]
-    # system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DBUILD_SHARED_LIBS=ON", *args
-    # system "cmake", "--build", "build"
-    # system "cmake", "--install", "build"
     system "cmake", "-S", ".", "-B", "static", *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF",
       "-DWEBP_BUILD_ANIM_UTILS=OFF",
       "-DWEBP_BUILD_CWEBP=OFF",
@@ -36,9 +33,6 @@ class WebpDehancer < Formula
       *args
     system "cmake", "--build", "static"
     lib.install buildpath.glob("static/*.a")
-
-    # Avoid rebuilding dependents that hard-code the prefix.
-    # inreplace (lib/"pkgconfig").glob("*.pc"), prefix, opt_prefix
   end
 
   test do

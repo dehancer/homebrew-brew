@@ -12,6 +12,7 @@ class LibdeflateDehancer < Formula
     system "cmake", "-S", ".", "-B", "build", "-DLIBDEFLATE_BUILD_SHARED_LIB=OFF", "-DLIBDEFLATE_BUILD_STATIC_LIB=ON", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
+    inreplace lib/"pkgconfig/libdeflate.pc", prefix, opt_prefix
   end
 
   test do

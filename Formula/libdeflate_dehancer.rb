@@ -8,6 +8,7 @@ class LibdeflateDehancer < Formula
   depends_on "cmake" => :build
 
   def install
+    ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
     system "cmake", "-S", ".", "-B", "build", "-DLIBDEFLATE_BUILD_SHARED_LIB=OFF", "-DLIBDEFLATE_BUILD_STATIC_LIB=ON", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"

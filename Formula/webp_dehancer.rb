@@ -18,6 +18,7 @@ class WebpDehancer < Formula
   depends_on "libtiff_dehancer"
 
   def install
+    ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
     ]
@@ -32,6 +33,7 @@ class WebpDehancer < Formula
       "-DWEBP_BUILD_WEBPMUX=OFF",
       *args
     system "cmake", "--build", "static"
+    system "cmake", "--install", "static"
     lib.install buildpath.glob("static/*.a")
   end
 

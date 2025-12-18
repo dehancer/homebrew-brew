@@ -24,7 +24,16 @@ class WebpDehancer < Formula
     # system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DBUILD_SHARED_LIBS=ON", *args
     # system "cmake", "--build", "build"
     # system "cmake", "--install", "build"
-    system "cmake", "-S", ".", "-B", "static", *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF", *args
+    system "cmake", "-S", ".", "-B", "static", *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF",
+      "-DWEBP_BUILD_ANIM_UTILS=OFF",
+      "-DWEBP_BUILD_CWEBP=OFF",
+      "-DWEBP_BUILD_DWEBP=OFF",
+      "-DWEBP_BUILD_GIF2WEBP=OFF",
+      "-DWEBP_BUILD_IMG2WEBP=OFF",
+      "-DWEBP_BUILD_VWEBP=OFF",
+      "-DWEBP_BUILD_WEBPINFO=OFF",
+      "-DWEBP_BUILD_WEBPMUX=OFF",
+      *args
     system "cmake", "--build", "static"
     lib.install buildpath.glob("static/*.a")
 
@@ -33,8 +42,5 @@ class WebpDehancer < Formula
   end
 
   test do
-    system bin/"cwebp", test_fixtures("test.png"), "-o", "webp_test.png"
-    system bin/"dwebp", "webp_test.png", "-o", "webp_test.webp"
-    assert_path_exists testpath/"webp_test.webp"
   end
 end

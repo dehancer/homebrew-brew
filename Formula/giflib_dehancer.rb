@@ -10,11 +10,19 @@ class GiflibDehancer < Formula
     regex(%r{url=.*?/giflib[._-]v?(\d+(?:\.\d+)+)\.t}i)
   end
 
+  option "with-13.0", "Build for macOS 13.0"
+  option "with-15", "Build for macOS 15"
+
   no_autobump! because: :requires_manual_review
 
   def install
-    ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    ohai "TESTBINARY value: #{ENV["TESTBINARY"]}"
+    if build.with? "macos-13.0"
+      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    elsif build.with? "macos-15"
+      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
+    else
+      odie "You must specify a macOS deployment target option: --with-13.0 or --with-15"
+    end
 
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'

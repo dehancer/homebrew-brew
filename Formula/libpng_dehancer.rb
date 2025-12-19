@@ -11,9 +11,6 @@ class LibpngDehancer < Formula
     regex(%r{url=.*?/libpng[._-]v?(\d+(?:\.\d+)+)\.t}i)
   end
 
-  option "with-macos13", "Build for macOS 13.0"
-  option "with-macos15", "Build for macOS 15"
-
   head do
     url "https://github.com/glennrp/libpng.git", branch: "libpng16"
 
@@ -25,12 +22,14 @@ class LibpngDehancer < Formula
   uses_from_macos "zlib"
 
   def install
-    if build.with? "macos13"
+    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    elsif build.with? "macos15"
+      ohai "Yes macos13"
+    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
+      ohai "NOOOO Maco15"
     else
-      odie "You must specify a macOS deployment target option: --with-macos13 or --with-macos15"
+      odie "You must specify a macOS deployment target by creating a flag file in /tmp"
     end
 
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")

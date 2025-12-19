@@ -10,9 +10,6 @@ class JpegTurboDehancer < Formula
   ]
   head "https://github.com/libjpeg-turbo/libjpeg-turbo.git", branch: "main"
 
-  option "with-macos13", "Build for macOS 13.0"
-  option "with-macos15", "Build for macOS 15"
-
   livecheck do
     url :stable
     strategy :github_latest
@@ -33,12 +30,14 @@ class JpegTurboDehancer < Formula
                  "share/man/man1/rdjpgcom.1", "share/man/man1/wrjpgcom.1"
 
   def install
-    if build.with? "macos13"
+    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    elsif build.with? "macos15"
+      ohai "Yes macos13"
+    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
+      ohai "NOOOO Maco15"
     else
-      odie "You must specify a macOS deployment target option: --with-macos13 or --with-macos15"
+      odie "You must specify a macOS deployment target by creating a flag file in /tmp"
     end
 
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")

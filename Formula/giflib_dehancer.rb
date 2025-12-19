@@ -14,6 +14,10 @@ class GiflibDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ENV['TEST_1']="yes"
+    ENV['HOMEBREW_OPTFLAGS']=""
+    ENV['HOMEBREW_RUSTFLAGS']=""
+
     system "make", "all"
     system "make", "install", "PREFIX=#{prefix}"
     rm_f Dir[lib/"libgif*.dylib"]

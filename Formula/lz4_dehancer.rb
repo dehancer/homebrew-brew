@@ -15,6 +15,9 @@ class Lz4Dehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ENV['HOMEBREW_OPTFLAGS']=""
+    ENV['HOMEBREW_RUSTFLAGS']=""
+
     system "make", "install", "PREFIX=#{prefix}", "BUILD_SHARED=0"
     # Prevent dependents from hardcoding Cellar paths.
     inreplace lib/"pkgconfig/liblz4.pc", prefix, opt_prefix

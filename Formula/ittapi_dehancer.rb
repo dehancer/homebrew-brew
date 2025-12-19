@@ -10,8 +10,11 @@ class IttapiDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    ENV['HOMEBREW_OPTFLAGS']=""
-    ENV['HOMEBREW_RUSTFLAGS']=""
+
+    if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
+      ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
+      ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
+    end
 
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"

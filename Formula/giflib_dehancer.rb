@@ -14,17 +14,14 @@ class GiflibDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ohai "TESTBINARY value: #{ENV["TESTBINARY"]}"
 
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
+      ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-
-    # ENV['HOMEBREW_OPTFLAGS'] = ENV['HOMEBREW_OPTFLAGS'].gsub("westmere", "x86-64") if ENV['HOMEBREW_OPTFLAGS']
-    # ENV['HOMEBREW_RUSTFLAGS'] = ENV['HOMEBREW_RUSTFLAGS'].gsub("westmere", "x86-64") if ENV['HOMEBREW_RUSTFLAGS']
-
-    ohai "HOMEBREW_OPTFLAGS value: #{ENV["HOMEBREW_OPTFLAGS"]}"
-    ohai "HOMEBREW_RUSTFLAGS value: #{ENV["HOMEBREW_RUSTFLAGS"]}"
+    # HOMEBREW_RUSTFLAGS
 
     system "make", "all"
     system "make", "install", "PREFIX=#{prefix}"

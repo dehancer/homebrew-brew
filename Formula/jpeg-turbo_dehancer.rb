@@ -31,8 +31,11 @@ class JpegTurboDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    ENV['HOMEBREW_OPTFLAGS']=""
-    ENV['HOMEBREW_RUSTFLAGS']=""
+
+    if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
+      ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
+      ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
+    end
 
     args = ["-DWITH_JPEG8=1", "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,#{rpath}", "-DBUILD_SHARED_LIBS=OFF","-DENABLE_SHARED=OFF", "-DENABLE_STATIC=ON"]
     if Hardware::CPU.arm? && OS.mac?

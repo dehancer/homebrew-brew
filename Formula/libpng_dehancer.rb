@@ -24,9 +24,6 @@ class LibpngDehancer < Formula
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
 
-    ohai "HOMEBREW_OPTFLAGS value: #{ENV["HOMEBREW_OPTFLAGS"]}"
-    ohai "HOMEBREW_RUSTFLAGS value: #{ENV["HOMEBREW_RUSTFLAGS"]}"
-
     ENV['HOMEBREW_OPTFLAGS']=""
     ENV['HOMEBREW_RUSTFLAGS']=""
 

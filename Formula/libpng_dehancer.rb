@@ -23,6 +23,9 @@ class LibpngDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ENV['HOMEBREW_OPTFLAGS']=""
+    ENV['HOMEBREW_RUSTFLAGS']=""
+
     system "./configure", "--disable-shared", "--enable-static", "--disable-silent-rules", *std_configure_args
     system "make"
     system "make", "test"

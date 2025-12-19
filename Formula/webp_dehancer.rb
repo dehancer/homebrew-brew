@@ -19,6 +19,9 @@ class WebpDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ENV['HOMEBREW_OPTFLAGS']=""
+    ENV['HOMEBREW_RUSTFLAGS']=""
+
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
     ]

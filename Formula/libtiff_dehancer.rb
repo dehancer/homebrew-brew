@@ -18,6 +18,9 @@ class LibtiffDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ENV['HOMEBREW_OPTFLAGS']=""
+    ENV['HOMEBREW_RUSTFLAGS']=""
+
     args = %W[
       --prefix=#{prefix}
       --disable-dependency-tracking

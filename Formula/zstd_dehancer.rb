@@ -27,6 +27,9 @@ class ZstdDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ENV['HOMEBREW_OPTFLAGS']=""
+    ENV['HOMEBREW_RUSTFLAGS']=""
+
     # Legacy support is the default after
     # https://github.com/facebook/zstd/commit/db104f6e839cbef94df4df8268b5fecb58471274
     # Set it to `ON` to be explicit about the configuration.

@@ -28,6 +28,9 @@ class LibzipDehancer < Formula
 
   def install
     ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    ENV['HOMEBREW_OPTFLAGS']=""
+    ENV['HOMEBREW_RUSTFLAGS']=""
+
     args = %w[
       -DENABLE_GNUTLS=OFF
       -DENABLE_MBEDTLS=OFF

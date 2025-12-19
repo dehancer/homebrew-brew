@@ -124,7 +124,7 @@ class Opencv410Dehancer < Formula
     system "/Applications/CMake.app/Contents/bin/cmake", "-S", ".", "-B", "build_static", *args, *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF"
     inreplace "build_static/modules/core/version_string.inc", "#{Superenv.shims_path}/", ""
     system "/Applications/CMake.app/Contents/bin/cmake", "--build", "build_static"
-    system "/Applications/CMake.app/Contents/bin/cmake", "--install", "build_shared"
+    system "/Applications/CMake.app/Contents/bin/cmake", "--install", "build_static"
     # lib.install buildpath.glob("build_static/{lib,3rdparty/**}/*.a")
 
     # Prevent dependents from using fragile Cellar paths

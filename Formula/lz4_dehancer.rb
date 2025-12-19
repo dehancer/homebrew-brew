@@ -13,10 +13,22 @@ class Lz4Dehancer < Formula
     strategy :github_latest
   end
 
+  option "with-macos13", "Build for macOS 13.0"
+  option "with-macos15", "Build for macOS 15"
+
   def install
-    ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-    ENV['HOMEBREW_OPTFLAGS']=""
-    ENV['HOMEBREW_RUSTFLAGS']=""
+    if build.with? "macos13"
+      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
+    elsif build.with? "macos15"
+      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
+    else
+      odie "You must specify a macOS deployment target option: --with-macos13 or --with-macos15"
+    end
+
+    if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
+      ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
+      ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
+    end
 
     system "make", "install", "PREFIX=#{prefix}", "BUILD_SHARED=0"
     # Prevent dependents from hardcoding Cellar paths.

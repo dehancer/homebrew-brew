@@ -29,7 +29,7 @@ class Lz4Dehancer < Formula
       ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    system "make", "install", "PREFIX=#{prefix}", "BUILD_SHARED=0"
+    system "make", "install", "PREFIX=#{prefix}"
     # Prevent dependents from hardcoding Cellar paths.
     inreplace lib/"pkgconfig/liblz4.pc", prefix, opt_prefix
   end

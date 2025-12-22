@@ -29,7 +29,7 @@ class XzDehancer < Formula
       ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    system "./configure", *std_configure_args, "--disable-silent-rules", "--disable-nls", "--disable-shared"
+    system "./configure", *std_configure_args, "--disable-silent-rules", "--disable-nls", "--enable-shared"
     system "make", "check"
     system "make", "install"
     inreplace lib/"pkgconfig/liblzma.pc", prefix, opt_prefix

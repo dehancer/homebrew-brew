@@ -23,7 +23,7 @@ class LibdeflateDehancer < Formula
       ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    system "cmake", "-S", ".", "-B", "build", "-DLIBDEFLATE_BUILD_SHARED_LIB=OFF", "-DLIBDEFLATE_BUILD_STATIC_LIB=ON", *std_cmake_args
+    system "cmake", "-S", ".", "-B", "build", "-DLIBDEFLATE_BUILD_SHARED_LIB=ON", "-DLIBDEFLATE_BUILD_STATIC_LIB=ON", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
     inreplace lib/"pkgconfig/libdeflate.pc", prefix, opt_prefix

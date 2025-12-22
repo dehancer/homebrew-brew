@@ -37,7 +37,7 @@ class LibpngDehancer < Formula
       ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    system "./configure", "--disable-shared", "--enable-static", "--disable-silent-rules", *std_configure_args
+    system "./configure", "--enable-shared", "--enable-static", "--disable-silent-rules", *std_configure_args
     system "make"
     system "make", "test"
     system "make", "install"

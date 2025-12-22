@@ -45,7 +45,7 @@ class ZstdDehancer < Formula
     # https://github.com/facebook/zstd/commit/db104f6e839cbef94df4df8268b5fecb58471274
     # Set it to `ON` to be explicit about the configuration.
     system "cmake", "-S", "build/cmake", "-B", "builddir",
-                    "-DBUILD_SHARED_LIBS=OFF", # set CMake libzstd target to shared
+                    "-DBUILD_SHARED_LIBS=ON",
                     "-DZSTD_BUILD_CONTRIB=OFF",
                     "-DCMAKE_INSTALL_RPATH=#{rpath}",
                     "-DZSTD_LEGACY_SUPPORT=ON",
@@ -53,7 +53,7 @@ class ZstdDehancer < Formula
                     "-DZSTD_LZMA_SUPPORT=ON",
                     "-DZSTD_LZ4_SUPPORT=ON",
                     "-DCMAKE_CXX_STANDARD=11",
-                    "-DZSTD_BUILD_SHARED=OFF",
+                    "-DZSTD_BUILD_SHARED=ON",
                     *std_cmake_args
     system "cmake", "--build", "builddir"
     system "cmake", "--install", "builddir"

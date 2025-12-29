@@ -58,8 +58,6 @@ class ZstdDehancer < Formula
     system "cmake", "--build", "builddir"
     system "cmake", "--install", "builddir"
 
-    rm_f Dir[lib/"libzstd.a"]
-
     # Prevent dependents from relying on fragile Cellar paths.
     # https://github.com/ocaml/ocaml/issues/12431
     inreplace lib/"pkgconfig/libzstd.pc", prefix, opt_prefix

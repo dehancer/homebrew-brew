@@ -39,6 +39,8 @@ class LibtiffDehancer < Formula
       --disable-webp
       --enable-zstd
       --enable-lzma
+      --enable-shared
+      --disable-static
       --with-jpeg-include-dir=#{Formula["jpeg-turbo"].opt_include}
       --with-jpeg-lib-dir=#{Formula["jpeg-turbo"].opt_lib}
       --without-x

@@ -45,7 +45,7 @@ class JpegTurboDehancer < Formula
       ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    args = ["-DWITH_JPEG8=1", "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,#{rpath}", "-DBUILD_SHARED_LIBS=ON","-DENABLE_SHARED=ON", "-DENABLE_STATIC=ON"]
+    args = ["-DWITH_JPEG8=1", "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,#{rpath}", "-DBUILD_SHARED_LIBS=ON","-DENABLE_SHARED=ON", "-DENABLE_STATIC=OFF"]
     if Hardware::CPU.arm? && OS.mac?
       if MacOS.version >= :ventura
         # https://github.com/libjpeg-turbo/libjpeg-turbo/issues/709

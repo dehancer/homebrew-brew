@@ -49,19 +49,19 @@ class WebpDehancer < Formula
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
-    system "cmake", "-S", ".", "-B", "static", *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF",
-      "-DWEBP_BUILD_ANIM_UTILS=OFF",
-      "-DWEBP_BUILD_CWEBP=OFF",
-      "-DWEBP_BUILD_DWEBP=OFF",
-      "-DWEBP_BUILD_GIF2WEBP=OFF",
-      "-DWEBP_BUILD_IMG2WEBP=OFF",
-      "-DWEBP_BUILD_VWEBP=OFF",
-      "-DWEBP_BUILD_WEBPINFO=OFF",
-      "-DWEBP_BUILD_WEBPMUX=OFF",
-      *args
-    system "cmake", "--build", "static"
-    system "cmake", "--install", "static"
-    lib.install buildpath.glob("static/*.a")
+    # system "cmake", "-S", ".", "-B", "static", *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF",
+    #   "-DWEBP_BUILD_ANIM_UTILS=OFF",
+    #   "-DWEBP_BUILD_CWEBP=OFF",
+    #   "-DWEBP_BUILD_DWEBP=OFF",
+    #   "-DWEBP_BUILD_GIF2WEBP=OFF",
+    #   "-DWEBP_BUILD_IMG2WEBP=OFF",
+    #   "-DWEBP_BUILD_VWEBP=OFF",
+    #   "-DWEBP_BUILD_WEBPINFO=OFF",
+    #   "-DWEBP_BUILD_WEBPMUX=OFF",
+    #   *args
+    # system "cmake", "--build", "static"
+    # system "cmake", "--install", "static"
+    # lib.install buildpath.glob("static/*.a")
 
     inreplace [
       lib/"pkgconfig/libsharpyuv.pc",

@@ -32,6 +32,8 @@ class Lz4Dehancer < Formula
     system "make", "install", "PREFIX=#{prefix}"
     # Prevent dependents from hardcoding Cellar paths.
     inreplace lib/"pkgconfig/liblz4.pc", prefix, opt_prefix
+
+    rm_f Dir[lib/"liblz4.a"]
   end
 
   test do

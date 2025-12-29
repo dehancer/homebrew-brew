@@ -54,6 +54,7 @@ class ZstdDehancer < Formula
                     "-DZSTD_LZ4_SUPPORT=ON",
                     "-DCMAKE_CXX_STANDARD=11",
                     "-DZSTD_BUILD_SHARED=ON",
+                    "-DZSTD_BUILD_STATIC=OFF",
                     *std_cmake_args
     system "cmake", "--build", "builddir"
     system "cmake", "--install", "builddir"

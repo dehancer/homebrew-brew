@@ -138,7 +138,7 @@ class Opencv413Dehancer < Formula
     end
 
     system "cmake", "-S", ".", "-B", "build_shared", *args, *std_cmake_args
-    inreplace "build_shared/modules/core/version_string.inc", "#{Superenv.shims_path}/", ""
+    inreplace "build_shared/modules/world/version_string.inc", "#{Superenv.shims_path}/", ""
     system "cmake", "--build", "build_shared"
     system "cmake", "--install", "build_shared"
     # lib.install buildpath.glob("build_shared/{lib,3rdparty/**}/*.a")

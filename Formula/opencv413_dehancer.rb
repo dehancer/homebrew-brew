@@ -51,6 +51,8 @@ class Opencv413Dehancer < Formula
   # end
 
   def install
+    odie "[dehancer] opencv formula is a work in progress and DOES NOT build or work. Do not use it."
+
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
       ohai "[dehancer] Building formula for macOS 13"
@@ -62,6 +64,7 @@ class Opencv413Dehancer < Formula
     end
 
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
+      # FIXME propagate removal of -march to other formulas
       # ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ENV['HOMEBREW_OPTFLAGS']='-arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"

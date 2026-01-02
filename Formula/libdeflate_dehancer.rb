@@ -10,10 +10,10 @@ class LibdeflateDehancer < Formula
   def install
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building dehancer formula for macOS 13"
+      ohai "[dehancer] Building formula for macOS 13"
     elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building dehancer formula for macOS 15"
+      ohai "[dehancer] Building formula for macOS 15"
     else
       odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
     end

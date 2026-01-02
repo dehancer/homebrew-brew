@@ -28,7 +28,7 @@ class GiflibDehancer < Formula
       ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    ENV.append_to_cflags '-fPIC' # FIXME propagate or remove
+    ENV.append_to_cflags '-fPIC'
 
     system "make", "all"
     system "make", "install", "PREFIX=#{prefix}"

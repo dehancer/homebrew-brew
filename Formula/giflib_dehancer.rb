@@ -15,17 +15,17 @@ class GiflibDehancer < Formula
   def install
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "Building dehancer formula for macOS 13"
+      ohai "[dehancer] Building dehancer formula for macOS 13"
     elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
       ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "Building dehancer formula for macOS 15"
+      ohai "[dehancer] Building dehancer formula for macOS 15"
     else
-      odie "You must specify a macOS deployment target by creating a flag file in /tmp"
+      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
     end
 
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
-      ohai "HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
+      ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
     ENV.append_to_cflags '-fPIC'

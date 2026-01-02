@@ -4,12 +4,12 @@ class Opencv410Dehancer < Formula
   license "Apache-2.0"
 
   stable do
-    url "https://github.com/opencv/opencv/archive/refs/tags/4.10.0.tar.gz"
-    sha256 "b2171af5be6b26f7a06b1229948bbb2bdaa74fcf5cd097e0af6378fce50a6eb9"
+    url "https://github.com/opencv/opencv/archive/refs/tags/4.13.0.tar.gz"
+    sha256 "1d40ca017ea51c533cf9fd5cbde5b5fe7ae248291ddf2af99d4c17cf8e13017d"
 
     resource "contrib" do
-      url "https://github.com/opencv/opencv_contrib/archive/refs/tags/4.10.0.tar.gz"
-      sha256 "65597f8fb8dc2b876c1b45b928bbcc5f772ddbaf97539bf1b737623d0604cba1"
+      url "https://github.com/opencv/opencv_contrib/archive/refs/tags/4.13.0.tar.gz"
+      sha256 "1e0077a4fd2960a7d2f4c9e49d6ba7bb891cac2d1be36d7e8e47aa97a9d1039b"
 
       livecheck do
         formula :parent
@@ -20,6 +20,7 @@ class Opencv410Dehancer < Formula
   no_autobump! because: :requires_manual_review
 
   depends_on "pkgconf" => :build
+  depends_on "cmake" => :build
   # depends_on "python-setuptools" => :build
   depends_on "jpeg-turbo_dehancer"
   # depends_on "jsoncpp"
@@ -71,17 +72,19 @@ class Opencv410Dehancer < Formula
     # ENV["OpenBLAS_HOME"] = Formula["openblas"].opt_prefix
 
     # Remove bundled libraries to make sure formula dependencies are used
-    libdirs = %w[ffmpeg libjasper libjpeg libjpeg-turbo libpng libtiff libwebp openexr openjpeg protobuf tbb zlib]
+    libdirs = %w[libjpeg-turbo libpng libtiff libwebp]
     libdirs.each { |l| rm_r(buildpath/"3rdparty"/l) }
 
     args = %W[
+      -DBUILD_OPENEXR=ON
+      -DBUILD_SHARED_LIBS=ON
+      -DBUILD_opencv_world=ON
       -DBUILD_opencv_legacy=OFF
       -DBUILD_opencv_mcc=ON
       -DWITH_JPEG=ON
       -DWITH_PNG=ON
       -DBUILD_JPEG=OFF
       -DBUILD_PNG=OFF
-      -DBUILD_OPENEXR=OFF
       -DBUILD_TIFF=OFF
       -DBUILD_WEBP=OFF
       -DBUILD_OpenCV_HAL=OFF
@@ -100,19 +103,19 @@ class Opencv410Dehancer < Formula
       -DBUILD_PROTOBUF=OFF
       -DBUILD_opencv_python2=OFF
       -DBUILD_opencv_python3=OFF
-      -DCMAKE_PREFIX_PATH=
       -DWITH_OPENEXR=OFF
       -DWITH_OPENJPEG=OFF
       -DBUILD_OPENJPEG=OFF
       -DWITH_JASPER=OFF
       -DBUILD_JASPER=OFF
       -DWITH_WEBP=ON
-      -DBUILD_TBB=OFF
+      -DBUILD_TBB=ON
       -DBUILD_ZLIB=OFF
       -DBUILD_opencv_hdf=OFF
       -DBUILD_opencv_java=OFF
-      -DBUILD_opencv_text=ON
+      -DBUILD_opencv_text=OFF
       -DOPENCV_ENABLE_NONFREE=ON
+      -DCMAKE_OSX_DEPLOYMENT_TARGET=#{ENV['MACOSX_DEPLOYMENT_TARGET']}
       -DOPENCV_EXTRA_MODULES_PATH=#{buildpath}/opencv_contrib/modules
       -DPROTOBUF_UPDATE_FILES=ON
       -DWITH_1394=OFF
@@ -134,11 +137,11 @@ class Opencv410Dehancer < Formula
       args += %W[-DCPU_BASELINE=#{cpu_baseline} -DCPU_BASELINE_REQUIRE=#{cpu_baseline}]
     end
 
-    system "/Applications/CMake.app/Contents/bin/cmake", "-S", ".", "-B", "build_static", *args, *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF"
-    inreplace "build_static/modules/core/version_string.inc", "#{Superenv.shims_path}/", ""
-    system "/Applications/CMake.app/Contents/bin/cmake", "--build", "build_static"
-    system "/Applications/CMake.app/Contents/bin/cmake", "--install", "build_static"
-    # lib.install buildpath.glob("build_static/{lib,3rdparty/**}/*.a")
+    system "cmake", "-S", ".", "-B", "build_shared", *args, *std_cmake_args
+    inreplace "build_shared/modules/core/version_string.inc", "#{Superenv.shims_path}/", ""
+    system "cmake", "--build", "build_shared"
+    system "cmake", "--install", "build_shared"
+    # lib.install buildpath.glob("build_shared/{lib,3rdparty/**}/*.a")
 
     # Prevent dependents from using fragile Cellar paths
     inreplace lib/"pkgconfig/opencv#{version.major}.pc", prefix, opt_prefix

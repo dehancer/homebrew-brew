@@ -62,7 +62,8 @@ class Opencv413Dehancer < Formula
     end
 
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
-      ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
+      # ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
+      ENV['HOMEBREW_OPTFLAGS']='-arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 

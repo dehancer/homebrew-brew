@@ -1,4 +1,4 @@
-class Opencv410Dehancer < Formula
+class Opencv413Dehancer < Formula
   desc "Open source computer vision library"
   homepage "https://opencv.org/"
   license "Apache-2.0"

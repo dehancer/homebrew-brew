@@ -36,7 +36,7 @@ class LittleCms2Dehancer < Formula
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    system "./configure", *std_configure_args
+    system "./configure", "--disable-static", *std_configure_args
     system "make", "install"
 
     # Avoid rebuilding dependents that hard-code the prefix.

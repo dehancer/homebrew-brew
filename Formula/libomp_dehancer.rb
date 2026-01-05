@@ -14,7 +14,6 @@ class LibompDehancer < Formula
   keg_only "it can override GCC headers and result in broken builds"
 
   depends_on "cmake" => :build
-  # depends_on "lit" => :build
   uses_from_macos "llvm" => :build
 
   resource "cmake" do
@@ -54,12 +53,6 @@ class LibompDehancer < Formula
     system "cmake", "-S", "src", "-B", "build/shared", *std_cmake_args, *args
     system "cmake", "--build", "build/shared"
     system "cmake", "--install", "build/shared"
-
-    # system "cmake", "-S", "src", "-B", "build/static",
-    #                 "-DLIBOMP_ENABLE_SHARED=OFF",
-    #                 *std_cmake_args, *args
-    # system "cmake", "--build", "build/static"
-    # system "cmake", "--install", "build/static"
   end
 
   test do

@@ -11,7 +11,7 @@ class LibompDehancer < Formula
   end
 
   # Ref: https://github.com/Homebrew/homebrew-core/issues/112107
-  keg_only "it can override GCC headers and result in broken builds"
+  # keg_only "it can override GCC headers and result in broken builds"
 
   depends_on "cmake" => :build
   uses_from_macos "llvm" => :build

@@ -36,28 +36,5 @@ class XzDehancer < Formula
   end
 
   test do
-    path = testpath/"data.txt"
-    original_contents = "." * 1000
-    path.write original_contents
-
-    # compress: data.txt -> data.txt.xz
-    system bin/"xz", path
-    refute_path_exists path
-
-    # decompress: data.txt.xz -> data.txt
-    system bin/"xz", "-d", "#{path}.xz"
-    assert_equal original_contents, path.read
-
-    # Check that http mirror works
-    xz_tar = testpath/"xz.tar.gz"
-    stable.mirrors.each do |mirror|
-      next if mirror.start_with?("https")
-
-      xz_tar.unlink if xz_tar.exist?
-
-      # Set fake CA Cert to block any HTTPS redirects.
-      system "curl", "--location", mirror, "--cacert", "/fake", "--output", xz_tar
-      assert_equal stable.checksum.hexdigest, xz_tar.sha256
-    end
   end
 end

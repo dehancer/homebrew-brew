@@ -34,6 +34,8 @@ class BrotliDehancer < Formula
     system "cmake", "-S", ".", "-B", "build", "-DCMAKE_INSTALL_RPATH=#{rpath}", *std_cmake_args
     system "cmake", "--build", "build", "--verbose"
     system "cmake", "--install", "build"
+
+    inreplace [lib/"pkgconfig/libbrotlicommon.pc", lib/"pkgconfig/libbrotlidec.pc"], prefix, opt_prefix
   end
 
   test do

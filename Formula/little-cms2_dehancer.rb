@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/4e69936/Formula/l/little-cms2.rb
 class LittleCms2Dehancer < Formula
   desc "Color management engine supporting ICC profiles"
   homepage "https://www.littlecms.com/"

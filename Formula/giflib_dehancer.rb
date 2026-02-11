@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/1d3a3a0/Formula/g/giflib.rb
 class GiflibDehancer < Formula
   desc "Library and utilities for processing GIFs"
   homepage "https://giflib.sourceforge.net/"

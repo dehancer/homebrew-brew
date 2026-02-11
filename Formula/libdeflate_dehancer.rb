@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/0ede0cf/Formula/lib/libdeflate.rb
 class LibdeflateDehancer < Formula
   desc "Heavily optimized DEFLATE/zlib/gzip compression and decompression"
   homepage "https://github.com/ebiggers/libdeflate"

@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/1a7068e60ea054dbea40754549081bc0d38013ac/Formula/x/xz.rb
 class XzDehancer < Formula
   desc "General-purpose data compression with high compression ratio"
   homepage "https://tukaani.org/xz/"

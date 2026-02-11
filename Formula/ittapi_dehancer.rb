@@ -1,8 +1,9 @@
+# https://github.com/Homebrew/homebrew-core/blob/870c2d002e69b0c99d301628e5163678bf5acd45/Formula/i/ittapi.rb
 class IttapiDehancer < Formula
   desc "Intel Instrumentation and Tracing Technology (ITT) and Just-In-Time (JIT) API"
   homepage "https://github.com/intel/ittapi"
-  url "https://github.com/intel/ittapi/archive/refs/tags/v3.26.4.tar.gz"
-  sha256 "22e62bc1e0bae9ca001d6ae7447d26b7bcfe5d955724d74e6bd1e3e2102b48b1"
+  url "https://github.com/intel/ittapi/archive/refs/tags/v3.26.7.tar.gz"
+  sha256 "29aa0dd50cdf0f0a0a21563eafc5b7ce79052c19594a64017a51f09304a4a39f"
   license "GPL-2.0-only"
   head "https://github.com/intel/ittapi.git", branch: "master"
 

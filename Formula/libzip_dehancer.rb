@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/89862cb/Formula/lib/libzip.rb
 class LibzipDehancer < Formula
   desc "C library for reading, creating, and modifying zip archives"
   homepage "https://libzip.org/"
@@ -23,8 +24,6 @@ class LibzipDehancer < Formula
   on_linux do
     depends_on "openssl@3"
   end
-
-  conflicts_with "libtcod", because: "libtcod and libzip install a `zip.h` header"
 
   def install
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")

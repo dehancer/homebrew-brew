@@ -1,3 +1,4 @@
+# FIXME not yet usable
 class Opencv413Dehancer < Formula
   desc "Open source computer vision library"
   homepage "https://opencv.org/"

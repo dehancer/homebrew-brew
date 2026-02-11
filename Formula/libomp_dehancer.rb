@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/38caa19/Formula/lib/libomp.rb
 class LibompDehancer < Formula
   desc "LLVM's OpenMP runtime library"
   homepage "https://openmp.llvm.org/"

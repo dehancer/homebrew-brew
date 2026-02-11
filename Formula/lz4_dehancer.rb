@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/ba5f440/Formula/l/lz4.rb
 class Lz4Dehancer < Formula
   desc "Extremely Fast Compression algorithm"
   homepage "https://lz4.github.io/lz4/"

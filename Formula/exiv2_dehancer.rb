@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/1f06fff/Formula/e/exiv2.rb
 class Exiv2Dehancer < Formula
   desc "EXIF and IPTC metadata manipulation library and tools"
   homepage "https://exiv2.org/"

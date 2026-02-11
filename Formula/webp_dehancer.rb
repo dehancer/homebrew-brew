@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/166f0e8/Formula/w/webp.rb
 class WebpDehancer < Formula
   desc "Image format providing lossless and lossy compression for web images"
   homepage "https://developers.google.com/speed/webp/"

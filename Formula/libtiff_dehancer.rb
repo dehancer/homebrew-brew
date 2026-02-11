@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/512eafb/Formula/lib/libtiff.rb
 class LibtiffDehancer < Formula
   desc "TIFF library and utilities"
   homepage "https://libtiff.gitlab.io/libtiff/"
@@ -33,8 +34,6 @@ class LibtiffDehancer < Formula
     end
 
     args = %W[
-      --prefix=#{prefix}
-      --disable-dependency-tracking
       --disable-libdeflate
       --disable-webp
       --enable-zstd
@@ -45,7 +44,7 @@ class LibtiffDehancer < Formula
       --with-jpeg-lib-dir=#{Formula["jpeg-turbo"].opt_lib}
       --without-x
     ]
-    system "./configure", *args
+    system "./configure", *args, *std_configure_args
     system "make", "install"
 
     # Avoid rebuilding dependents that hard-code the prefix.

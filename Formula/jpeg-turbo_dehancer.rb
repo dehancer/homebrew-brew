@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/b208aeb39bcc1ed967169c13997972119aca40ab/Formula/j/jpeg-turbo.rb
 class JpegTurboDehancer < Formula
   desc "JPEG image codec that aids compression and decompression"
   homepage "https://www.libjpeg-turbo.org/"

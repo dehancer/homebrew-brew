@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/aa668fe/Formula/b/brotli.rb
 class BrotliDehancer < Formula
   desc "Generic-purpose lossless compression algorithm by Google"
   homepage "https://github.com/google/brotli"

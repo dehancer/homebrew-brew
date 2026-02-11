@@ -1,3 +1,4 @@
+# https://github.com/Homebrew/homebrew-core/blob/912042f602e49660d34e39d1fe373f5dfe84ae73/Formula/j/jasper.rb
 class JasperDehancer < Formula
   desc "Library for manipulating JPEG-2000 images"
   homepage "https://ece.engr.uvic.ca/~frodo/jasper/"

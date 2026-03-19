@@ -1,4 +1,4 @@
-# https://github.com/Homebrew/homebrew-core/blob/89862cb/Formula/lib/libzip.rb
+# https://github.com/Homebrew/homebrew-core/blob/7e9c873b3b2573d09f9a1c71f58bb45914fc625b/Formula/lib/libzip.rb
 class LibzipDehancer < Formula
   desc "C library for reading, creating, and modifying zip archives"
   homepage "https://libzip.org/"

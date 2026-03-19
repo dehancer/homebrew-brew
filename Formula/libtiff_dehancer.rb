@@ -1,4 +1,4 @@
-# https://github.com/Homebrew/homebrew-core/blob/512eafb/Formula/lib/libtiff.rb
+# https://github.com/Homebrew/homebrew-core/blob/512eafbe27501b2b67b15b308fb2a0c3fa0e9486/Formula/lib/libtiff.rb
 class LibtiffDehancer < Formula
   desc "TIFF library and utilities"
   homepage "https://libtiff.gitlab.io/libtiff/"

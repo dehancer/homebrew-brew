@@ -1,17 +1,15 @@
-# https://github.com/Homebrew/homebrew-core/blob/1d3a3a0/Formula/g/giflib.rb
+# https://github.com/Homebrew/homebrew-core/blob/01b3183/Formula/g/giflib.rb
 class GiflibDehancer < Formula
   desc "Library and utilities for processing GIFs"
   homepage "https://giflib.sourceforge.net/"
-  url "https://downloads.sourceforge.net/project/giflib/giflib-5.2.2.tar.gz"
-  sha256 "be7ffbd057cadebe2aa144542fd90c6838c6a083b5e8a9048b8ee3b66b29d5fb"
+  url "https://downloads.sourceforge.net/project/giflib/giflib-6.x/giflib-6.1.2.tar.gz"
+  sha256 "2421abb54f5906b14965d28a278fb49e1ec9fe5ebbc56244dd012383a973d5c0"
   license "MIT"
 
   livecheck do
     url :stable
     regex(%r{url=.*?/giflib[._-]v?(\d+(?:\.\d+)+)\.t}i)
   end
-
-  no_autobump! because: :requires_manual_review
 
   def install
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
@@ -29,10 +27,14 @@ class GiflibDehancer < Formula
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
+    args = ["PREFIX=#{prefix}"]
+    args << "LIBUTILSO="
+
     ENV.append_to_cflags '-fPIC'
 
-    system "make", "all"
-    system "make", "install", "PREFIX=#{prefix}"
+    system "make", "all", *args
+    ENV.deparallelize # avoid parallel mkdir
+    system "make", "install", *args
     rm_f Dir[lib/"libgif.a"]
   end
 

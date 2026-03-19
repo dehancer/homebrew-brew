@@ -1,9 +1,9 @@
-# https://github.com/Homebrew/homebrew-core/blob/1f06fff/Formula/e/exiv2.rb
+# https://github.com/Homebrew/homebrew-core/blob/e0845723775cdd5b4d3480011d3d46312d743ef6/Formula/e/exiv2.rb
 class Exiv2Dehancer < Formula
   desc "EXIF and IPTC metadata manipulation library and tools"
   homepage "https://exiv2.org/"
-  url "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.7.tar.gz"
-  sha256 "5e292b02614dbc0cee40fe1116db2f42f63ef6b2ba430c77b614e17b8d61a638"
+  url "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.8.tar.gz"
+  sha256 "ea51b0609f58a9afa063b60daa1539948b62247721e154f4fff0ad3aec9f9756"
   license "GPL-2.0-or-later"
   head "https://github.com/Exiv2/exiv2.git", branch: "main"
 

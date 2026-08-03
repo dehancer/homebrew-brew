@@ -46,7 +46,7 @@ class WebpDehancer < Formula
 
     inreplace (lib/"pkgconfig").glob("*.pc"), prefix, opt_prefix
 
-    inreplace (lib/"pkgconfig").glob("*.pc"), "-lwebp", "-lsharpyuv -lwebp" # dehancer
+    # inreplace (lib/"pkgconfig").glob("*.pc"), "-lwebp", "-lsharpyuv -lwebp" # dehancer - seems not needed anymore?
   end
 
   test do

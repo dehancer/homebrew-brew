@@ -1,10 +1,13 @@
-# https://github.com/Homebrew/homebrew-core/blob/166f0e8/Formula/w/webp.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/w/webp.rb
+# d9641789dbd0f529739c1fee14a2e6bfee43524f
+
 class WebpDehancer < Formula
   desc "Image format providing lossless and lossy compression for web images"
   homepage "https://developers.google.com/speed/webp/"
   url "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.6.0.tar.gz"
   sha256 "e4ab7009bf0629fd11982d4c2aa83964cf244cffba7347ecd39019a9e38c4564"
   license "BSD-3-Clause"
+  compatibility_version 1
   head "https://chromium.googlesource.com/webm/libwebp.git", branch: "main"
 
   livecheck do
@@ -16,7 +19,6 @@ class WebpDehancer < Formula
   depends_on "giflib_dehancer"
   depends_on "jpeg-turbo_dehancer"
   depends_on "libpng_dehancer"
-  depends_on "libtiff_dehancer"
 
   def install
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
@@ -36,50 +38,20 @@ class WebpDehancer < Formula
 
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
+      -DCMAKE_DISABLE_FIND_PACKAGE_TIFF=ON
     ]
-    system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DBUILD_SHARED_LIBS=ON",
-      "-DWEBP_BUILD_ANIM_UTILS=OFF",
-      "-DWEBP_BUILD_CWEBP=OFF",
-      "-DWEBP_BUILD_DWEBP=OFF",
-      "-DWEBP_BUILD_GIF2WEBP=OFF",
-      "-DWEBP_BUILD_IMG2WEBP=OFF",
-      "-DWEBP_BUILD_VWEBP=OFF",
-      "-DWEBP_BUILD_WEBPINFO=OFF",
-      "-DWEBP_BUILD_WEBPMUX=OFF",
-      *args
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DBUILD_SHARED_LIBS=ON", *args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
-    # system "cmake", "-S", ".", "-B", "static", *std_cmake_args, "-DBUILD_SHARED_LIBS=OFF",
-    #   "-DWEBP_BUILD_ANIM_UTILS=OFF",
-    #   "-DWEBP_BUILD_CWEBP=OFF",
-    #   "-DWEBP_BUILD_DWEBP=OFF",
-    #   "-DWEBP_BUILD_GIF2WEBP=OFF",
-    #   "-DWEBP_BUILD_IMG2WEBP=OFF",
-    #   "-DWEBP_BUILD_VWEBP=OFF",
-    #   "-DWEBP_BUILD_WEBPINFO=OFF",
-    #   "-DWEBP_BUILD_WEBPMUX=OFF",
-    #   *args
-    # system "cmake", "--build", "static"
-    # system "cmake", "--install", "static"
-    # lib.install buildpath.glob("static/*.a")
+    inreplace (lib/"pkgconfig").glob("*.pc"), prefix, opt_prefix
 
-    inreplace [
-      lib/"pkgconfig/libsharpyuv.pc",
-      lib/"pkgconfig/libwebp.pc",
-      lib/"pkgconfig/libwebpdecoder.pc",
-      lib/"pkgconfig/libwebpdemux.pc",
-      lib/"pkgconfig/libwebpmux.pc"
-    ], prefix, opt_prefix
-
-    inreplace [
-      lib/"pkgconfig/libwebp.pc",
-      lib/"pkgconfig/libwebpdecoder.pc",
-      lib/"pkgconfig/libwebpdemux.pc",
-      lib/"pkgconfig/libwebpmux.pc"
-    ], "-lwebp", "-lsharpyuv -lwebp"
+    inreplace (lib/"pkgconfig").glob("*.pc"), "-lwebp", "-lsharpyuv -lwebp" # dehancer
   end
 
   test do
+    system bin/"cwebp", test_fixtures("test.png"), "-o", "webp_test.png"
+    system bin/"dwebp", "webp_test.png", "-o", "webp_test.webp"
+    assert_path_exists testpath/"webp_test.webp"
   end
 end

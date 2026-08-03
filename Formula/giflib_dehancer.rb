@@ -1,10 +1,13 @@
-# https://github.com/Homebrew/homebrew-core/blob/01b3183/Formula/g/giflib.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/g/giflib.rb
+# fc29e8812ac53c2b84c123ec1a78e4fecc2e6d62
+
 class GiflibDehancer < Formula
   desc "Library and utilities for processing GIFs"
   homepage "https://giflib.sourceforge.net/"
-  url "https://downloads.sourceforge.net/project/giflib/giflib-6.x/giflib-6.1.2.tar.gz"
-  sha256 "2421abb54f5906b14965d28a278fb49e1ec9fe5ebbc56244dd012383a973d5c0"
+  url "https://downloads.sourceforge.net/project/giflib/giflib-6.x/giflib-6.1.3.tar.gz"
+  sha256 "b65b66b99f0424b93525f987386f22fc5efb9da2bfc92ad4a532249aaffbab0e"
   license "MIT"
+  compatibility_version 1
 
   livecheck do
     url :stable
@@ -28,14 +31,17 @@ class GiflibDehancer < Formula
     end
 
     args = ["PREFIX=#{prefix}"]
-    args << "LIBUTILSO="
+    # Manually skipping shared libutil due to https://sourceforge.net/p/giflib/bugs/189/.
+    # It is currently unused (binaries link to libutil.a) and not installed.
+    args << "LIBUTILSO=" if OS.mac?
 
     ENV.append_to_cflags '-fPIC'
 
     system "make", "all", *args
     ENV.deparallelize # avoid parallel mkdir
     system "make", "install", *args
-    rm_f Dir[lib/"libgif.a"]
+
+    rm_f Dir[lib/"libgif.a"] # dehancer
   end
 
   test do

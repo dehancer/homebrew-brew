@@ -1,10 +1,13 @@
-# https://github.com/Homebrew/homebrew-core/blob/912042f602e49660d34e39d1fe373f5dfe84ae73/Formula/j/jasper.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/j/jasper.rb
+# 46d5ce2511aabd22fb05f14fcd14c1550703d702
+
 class JasperDehancer < Formula
   desc "Library for manipulating JPEG-2000 images"
   homepage "https://ece.engr.uvic.ca/~frodo/jasper/"
-  url "https://github.com/jasper-software/jasper/releases/download/version-4.2.8/jasper-4.2.8.tar.gz"
-  sha256 "98058a94fbff57ec6e31dcaec37290589de0ba6f47c966f92654681a56c71fae"
+  url "https://github.com/jasper-software/jasper/releases/download/version-4.2.9/jasper-4.2.9.tar.gz"
+  sha256 "f71cf643937a5fcaedcfeb30a22ba406912948ad4413148214df280afc425454"
   license "JasPer-2.0"
+  compatibility_version 1
 
   livecheck do
     url :stable
@@ -35,10 +38,14 @@ class JasperDehancer < Formula
       -DJAS_ENABLE_AUTOMATIC_DEPENDENCIES=OFF
     ]
 
-    # Make sure macOS's GLUT.framework is used, not XQuartz or freeglut
-    # Reported to CMake upstream 4 Apr 2016 https://gitlab.kitware.com/cmake/cmake/issues/16045
-    glut_lib = "#{MacOS.sdk_path}/System/Library/Frameworks/GLUT.framework"
-    "-DGLUT_glut_LIBRARY=#{glut_lib}"
+    args << if OS.mac?
+      # Make sure macOS's GLUT.framework is used, not XQuartz or freeglut
+      # Reported to CMake upstream 4 Apr 2016 https://gitlab.kitware.com/cmake/cmake/issues/16045
+      glut_lib = "#{MacOS.sdk_path}/System/Library/Frameworks/GLUT.framework"
+      "-DGLUT_glut_LIBRARY=#{glut_lib}"
+    else
+      "-DJAS_ENABLE_OPENGL=OFF"
+    end
 
     # Build in the parent of `buildpath` to avoid errors from upstream's in-source build detection.
     system "cmake", "-S", ".", "-B", "../build-shared", "-DJAS_ENABLE_SHARED=ON", *args, *std_cmake_args

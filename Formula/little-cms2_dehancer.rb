@@ -1,15 +1,18 @@
-# https://github.com/Homebrew/homebrew-core/blob/4e69936/Formula/l/little-cms2.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/l/little-cms2.rb
+# 6845605ab5b1e7f841e98099da6eb646fa76a1f2
+
 class LittleCms2Dehancer < Formula
   desc "Color management engine supporting ICC profiles"
   homepage "https://www.littlecms.com/"
   # Ensure release is announced at https://www.littlecms.com/categories/releases/
   # (or https://www.littlecms.com/blog/)
-  url "https://downloads.sourceforge.net/project/lcms/lcms/2.18/lcms2-2.18.tar.gz"
-  sha256 "ee67be3566f459362c1ee094fde2c159d33fa0390aa4ed5f5af676f9e5004347"
+  url "https://downloads.sourceforge.net/project/lcms/lcms/2.19/lcms2-2.19.tar.gz"
+  sha256 "49e7e134e4299733dd0eda434fa468997a28ab3d33fa397c642b03644f552216"
   license "MIT"
   version_scheme 1
+  compatibility_version 1
 
-  # The Little CMS website has been redesigned and there's no longer a
+ # The Little CMS website has been redesigned and there's no longer a
   # "Download" page we can check for releases. As of writing this, checking the
   # "Releases" blog posts seems to be our best option and we just have to hope
   # that the post URLs, headings, etc. maintain a consistent format.

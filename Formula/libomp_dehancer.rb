@@ -1,10 +1,13 @@
-# https://github.com/Homebrew/homebrew-core/blob/20468d9/Formula/lib/libomp.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/lib/libomp.rb
+# ddbdc91ebe6bfebc03d41998fb4e1f811326e90f
+
 class LibompDehancer < Formula
   desc "LLVM's OpenMP runtime library"
   homepage "https://openmp.llvm.org/"
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.1/llvm-project-22.1.1.src.tar.xz"
-  sha256 "9c6f37f6f5f68d38f435d25f770fc48c62d92b2412205767a16dac2c942f0c95"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.8/llvm-project-22.1.8.src.tar.xz"
+  sha256 "922f1817a0df7b1489272d18134ee0087a8b068828f87ac63b9861b1a9965888  "
   license "MIT"
+  compatibility_version 1
 
   livecheck do
     url :stable
@@ -12,7 +15,7 @@ class LibompDehancer < Formula
   end
 
   # Ref: https://github.com/Homebrew/homebrew-core/issues/112107
-  # keg_only "it can override GCC headers and result in broken builds"
+  # keg_only "it can override GCC headers and result in broken builds" # commented out by dehancer
 
   depends_on "cmake" => :build
   uses_from_macos "llvm" => :build

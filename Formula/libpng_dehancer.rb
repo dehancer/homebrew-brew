@@ -1,11 +1,13 @@
-# https://github.com/Homebrew/homebrew-core/blob/af47bed/Formula/lib/libpng.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/lib/libpng.rb
+# a9f7e8e67538dc07493368eaa149769dd3def7ee
+
 class LibpngDehancer < Formula
   desc "Library for manipulating PNG images"
   homepage "https://www.libpng.org/pub/png/libpng.html"
-  url "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.55/libpng-1.6.55.tar.xz"
-  mirror "https://sourceforge.mirrorservice.org/l/li/libpng/libpng16/1.6.55/libpng-1.6.55.tar.xz"
-  sha256 "d925722864837ad5ae2a82070d4b2e0603dc72af44bd457c3962298258b8e82d"
+  url "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.58/libpng-1.6.58.tar.xz"
+  sha256 "28eb403f51f0f7405249132cecfe82ea5c0ef97f1b32c5a65828814ae0d34775"
   license "libpng-2.0"
+  compatibility_version 1
 
   livecheck do
     url :stable
@@ -13,14 +15,22 @@ class LibpngDehancer < Formula
   end
 
   head do
-    url "https://github.com/glennrp/libpng.git", branch: "libpng16"
+    url "https://github.com/pnggroup/libpng.git", branch: "libpng16"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build
     depends_on "libtool" => :build
   end
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+
+    # Use Fedora's regenerated test PNG for zlib-ng-compat compression
+    resource "pngtest.png" do
+      url "https://src.fedoraproject.org/rpms/libpng/raw/49e9a06ca115aaa911dd3419ee79c1870d1428fb/f/pngtest.png"
+      sha256 "f925a657a5343cfb724414c01e87afd4d60b1f82a46edc0e11f016a126f84064"
+    end
+  end
 
   def install
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
@@ -38,13 +48,15 @@ class LibpngDehancer < Formula
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
+    resource("pngtest.png").stage(buildpath) if OS.linux?
+
     system "./configure", "--enable-shared", "--disable-static", "--disable-silent-rules", *std_configure_args
     system "make"
     system "make", "test"
     system "make", "install"
 
     # Avoid rebuilds of dependants that hardcode this path.
-    inreplace [ lib/"pkgconfig/libpng.pc", lib/"pkgconfig/libpng16.pc"], prefix, opt_prefix
+    inreplace [ lib/"pkgconfig/libpng.pc", lib/"pkgconfig/libpng16.pc"], prefix, opt_prefix # dehancer: added lib/"pkgconfig/libpng16.pc"
   end
 
   test do

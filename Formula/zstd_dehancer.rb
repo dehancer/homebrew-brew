@@ -1,6 +1,8 @@
-# https://github.com/Homebrew/homebrew-core/blob/23f2c8d3be8ba7061d749d8827d5f26e838e8cbf/Formula/z/zstd.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/z/zstd.rb
+# 47df988fea2ecfaebc7b3aab46edb2452c58d5d7
+
 class ZstdDehancer < Formula
-  desc "Zstandard is a real-time compression algorithm"
+ desc "Zstandard is a real-time compression algorithm"
   homepage "https://facebook.github.io/zstd/"
   url "https://github.com/facebook/zstd/archive/refs/tags/v1.5.7.tar.gz"
   mirror "http://fresh-center.net/linux/misc/zstd-1.5.7.tar.gz"
@@ -11,6 +13,8 @@ class ZstdDehancer < Formula
     "BSD-2-Clause", # programs/zstdgrep, lib/libzstd.pc.in
     "MIT", # lib/dictBuilder/divsufsort.c
   ]
+  revision 1
+  compatibility_version 1
   head "https://github.com/facebook/zstd.git", branch: "dev"
 
   # The upstream repository contains old, one-off tags (5.5.5, 6.6.6) that are
@@ -24,7 +28,9 @@ class ZstdDehancer < Formula
   depends_on "lz4_dehancer"
   depends_on "xz_dehancer"
 
-  uses_from_macos "zlib"
+  on_linux do
+    depends_on "zlib-ng-compat"
+  end
 
   def install
     if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
@@ -42,14 +48,15 @@ class ZstdDehancer < Formula
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
-    # There is no need for explicit -fPIC here because POSITION_INDEPENDENT_CODE is already enabled for ztsd in their CMake files.
+    # Dehancer: There is no need for explicit -fPIC here because POSITION_INDEPENDENT_CODE is already enabled for ztsd in their CMake files.
 
     # Legacy support is the default after
     # https://github.com/facebook/zstd/commit/db104f6e839cbef94df4df8268b5fecb58471274
     # Set it to `ON` to be explicit about the configuration.
     system "cmake", "-S", "build/cmake", "-B", "builddir",
-                    "-DBUILD_SHARED_LIBS=ON",
-                    "-DZSTD_BUILD_CONTRIB=OFF",
+                    "-DBUILD_SHARED_LIBS=ON", # set CMake libzstd target to shared
+                    "-DZSTD_PROGRAMS_LINK_SHARED=ON", # link `zstd` to `libzstd`
+                    "-DZSTD_BUILD_CONTRIB=ON",
                     "-DCMAKE_INSTALL_RPATH=#{rpath}",
                     "-DZSTD_LEGACY_SUPPORT=ON",
                     "-DZSTD_ZLIB_SUPPORT=ON",

@@ -1,4 +1,6 @@
-# https://github.com/Homebrew/homebrew-core/blob/aa668fe/Formula/b/brotli.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/b/brotli.rb
+# 27bdee899dc125e1f28f04b6377766d396577a39
+
 class BrotliDehancer < Formula
   desc "Generic-purpose lossless compression algorithm by Google"
   homepage "https://github.com/google/brotli"
@@ -7,6 +9,7 @@ class BrotliDehancer < Formula
   mirror "http://fresh-center.net/linux/misc/legacy/brotli-1.2.0.tar.gz"
   sha256 "816c96e8e8f193b40151dad7e8ff37b1221d019dbcb9c35cd3fadbfe6477dfec"
   license "MIT"
+  compatibility_version 1
   head "https://github.com/google/brotli.git", branch: "master"
 
   livecheck do
@@ -34,11 +37,16 @@ class BrotliDehancer < Formula
 
     system "cmake", "-S", ".", "-B", "build", "-DCMAKE_INSTALL_RPATH=#{rpath}", *std_cmake_args
     system "cmake", "--build", "build", "--verbose"
+    system "ctest", "--test-dir", "build", "--verbose"
     system "cmake", "--install", "build"
 
-    inreplace [lib/"pkgconfig/libbrotlicommon.pc", lib/"pkgconfig/libbrotlidec.pc"], prefix, opt_prefix
+    inreplace [lib/"pkgconfig/libbrotlicommon.pc", lib/"pkgconfig/libbrotlidec.pc"], prefix, opt_prefix # dehancer
   end
 
   test do
+    (testpath/"file.txt").write("Hello, World!")
+    system bin/"brotli", "file.txt", "file.txt.br"
+    system bin/"brotli", "file.txt.br", "--output=out.txt", "--decompress"
+    assert_equal (testpath/"file.txt").read, (testpath/"out.txt").read
   end
 end

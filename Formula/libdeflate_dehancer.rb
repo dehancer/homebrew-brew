@@ -1,10 +1,13 @@
-# https://github.com/Homebrew/homebrew-core/blob/0ede0cf/Formula/lib/libdeflate.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/lib/libdeflate.rb
+# 999f9ece7df2ee07fbb7c6c40c2e554068311259
+
 class LibdeflateDehancer < Formula
   desc "Heavily optimized DEFLATE/zlib/gzip compression and decompression"
   homepage "https://github.com/ebiggers/libdeflate"
   url "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.25.tar.gz"
   sha256 "d11473c1ad4c57d874695e8026865e38b47116bbcb872bfc622ec8f37a86017d"
   license "MIT"
+  compatibility_version 1
 
   depends_on "cmake" => :build
 
@@ -27,7 +30,8 @@ class LibdeflateDehancer < Formula
     system "cmake", "-S", ".", "-B", "build", "-DLIBDEFLATE_BUILD_SHARED_LIB=ON", "-DLIBDEFLATE_BUILD_STATIC_LIB=OFF", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
-    inreplace lib/"pkgconfig/libdeflate.pc", prefix, opt_prefix
+
+    inreplace lib/"pkgconfig/libdeflate.pc", prefix, opt_prefix # dehancer
   end
 
   test do

@@ -1,4 +1,6 @@
-# https://github.com/Homebrew/homebrew-core/blob/ba5f440/Formula/l/lz4.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/l/lz4.rb
+# ba5f440dac7b251bb7a5fe0f907bdec7dabc521e
+
 class Lz4Dehancer < Formula
   desc "Extremely Fast Compression algorithm"
   homepage "https://lz4.github.io/lz4/"
@@ -34,7 +36,7 @@ class Lz4Dehancer < Formula
     # Prevent dependents from hardcoding Cellar paths.
     inreplace lib/"pkgconfig/liblz4.pc", prefix, opt_prefix
 
-    rm_f Dir[lib/"liblz4.a"]
+    rm_f Dir[lib/"liblz4.a"] # dehancer
   end
 
   test do

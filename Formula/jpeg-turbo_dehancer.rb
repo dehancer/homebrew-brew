@@ -1,14 +1,17 @@
-# https://github.com/Homebrew/homebrew-core/blob/b208aeb39bcc1ed967169c13997972119aca40ab/Formula/j/jpeg-turbo.rb
+# https://github.com/Homebrew/homebrew-core/blob/main/Formula/j/jpeg-turbo.rb
+# f8c8c7a34ac43bba24523a1d8d09215249c4999b
+
 class JpegTurboDehancer < Formula
   desc "JPEG image codec that aids compression and decompression"
   homepage "https://www.libjpeg-turbo.org/"
-  url "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.1.3/libjpeg-turbo-3.1.3.tar.gz"
-  sha256 "075920b826834ac4ddf97661cc73491047855859affd671d52079c6867c1c6c0"
+  url "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.2.0/libjpeg-turbo-3.2.0.tar.gz"
+  sha256 "6f30092cef9fb839779646608f4ee14ae3cbac989c47fa05e841b0841f09878e"
   license all_of: [
     "IJG", # libjpeg API library and programs
     "Zlib", # libjpeg-turbo SIMD source code
     "BSD-3-Clause", # TurboJPEG API library and programs
   ]
+  compatibility_version 1
   head "https://github.com/libjpeg-turbo/libjpeg-turbo.git", branch: "main"
 
   livecheck do
@@ -57,6 +60,7 @@ class JpegTurboDehancer < Formula
         args << "-DFLOATTEST12=no-fp-contract"
       end
     end
+
     args += std_cmake_args.reject { |arg| arg["CMAKE_INSTALL_LIBDIR"].present? }
 
     system "cmake", "-S", ".", "-B", "build", *args

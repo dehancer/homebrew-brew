@@ -16,15 +16,17 @@ class Exiv2Dehancer < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "gettext" => :build # for msgmerge
+  # Dehancer: no, we don't need NLS and dependency on gettext and the rest because those are built for 26.
+  # depends_on "gettext" => :build # for msgmerge
   depends_on "brotli_dehancer"
 
   uses_from_macos "curl"
   uses_from_macos "expat"
 
-  on_macos do
-    depends_on "gettext"
-  end
+  # Dehancer: no, we don't need NLS and dependency on gettext and the rest because those are built for 26.
+  # on_macos do
+  #   depends_on "gettext"
+  # end
 
   on_linux do
     depends_on "zlib-ng-compat"
@@ -50,8 +52,7 @@ class Exiv2Dehancer < Formula
       -DEXIV2_ENABLE_XMP=ON
       -DEXIV2_ENABLE_VIDEO=OFF
       -DEXIV2_ENABLE_PNG=ON
-      -DEXIV2_ENABLE_NLS=ON
-      -DEXIV2_ENABLE_PRINTUCS2=ON
+      -DEXIV2_ENABLE_NLS=OFF
       -DEXIV2_ENABLE_LENSDATA=ON
       -DEXIV2_ENABLE_WEBREADY=OFF
       -DEXIV2_ENABLE_CURL=OFF

@@ -18,7 +18,7 @@ class Opencv413Dehancer < Formula
     end
   end
 
-  no_autobump! because: :requires_manual_review
+  # no_autobump! because: :requires_manual_review
 
   depends_on "pkgconf" => :build
   depends_on "cmake" => :build

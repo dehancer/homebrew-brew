@@ -1,5 +1,5 @@
 # https://github.com/Homebrew/homebrew-core/commits/main/Formula/l/lz4.rb
-# ba5f440dac7b251bb7a5fe0f907bdec7dabc521e
+# ad6d3bbf8f5eac27a5ce90e695c6b41765d40bb7
 
 class Lz4Dehancer < Formula
   desc "Extremely Fast Compression algorithm"
@@ -16,17 +16,18 @@ class Lz4Dehancer < Formula
     strategy :github_latest
   end
 
-  def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
+  bottle do
+    rebuild 2
+    sha256 cellar: :any, arm64_tahoe:   "538e2d6b920b663fcad6b99c1eb294c1157ea9a35d7a50bf0c632df4f427bdf5"
+    sha256 cellar: :any, arm64_sequoia: "97e9c430fd82ccaaf619accc534157e9adfe2f2742ee7c47bfc481b3660b5d3f"
+    sha256 cellar: :any, arm64_sonoma:  "bad7f434a13146990b5a021a020583b19d0fa9b082d5b8e36b31f517d512572b"
+    sha256 cellar: :any, arm64_linux:   "87855c40ff71978c66a39cfcb19d407a8fa83a302d42a57eb2941728e9922009"
+    sha256 cellar: :any, x86_64_linux:  "cbfa3337697c4585b2f0cbe679af7802046c36cd9162f519af89b33c3d52b4e0"
+  end
 
+  deny_network_access!
+
+  def install
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"

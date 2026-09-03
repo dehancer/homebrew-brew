@@ -1,8 +1,8 @@
 # https://github.com/Homebrew/homebrew-core/commits/main/Formula/z/zstd.rb
-# 47df988fea2ecfaebc7b3aab46edb2452c58d5d7
+# a1ee25c29e526a2599da83e1d8740a1922d04e67
 
 class ZstdDehancer < Formula
- desc "Zstandard is a real-time compression algorithm"
+  desc "Zstandard is a real-time compression algorithm"
   homepage "https://facebook.github.io/zstd/"
   url "https://github.com/facebook/zstd/archive/refs/tags/v1.5.7.tar.gz"
   mirror "http://fresh-center.net/linux/misc/zstd-1.5.7.tar.gz"
@@ -24,25 +24,28 @@ class ZstdDehancer < Formula
     strategy :github_latest
   end
 
+  bottle do
+    sha256 cellar: :any,                 arm64_tahoe:   "628a4ef53428d0078e3d76d297171ce8d0294f5ec1de3f20305e08c4dd333565"
+    sha256 cellar: :any,                 arm64_sequoia: "d72adf48460a8384b256f88061cd7b9df4977df7fa2e0794051d427db754a565"
+    sha256 cellar: :any,                 arm64_sonoma:  "35b5150b27512a94ebaee7b4399aaa8adf42d247e6968319e4aeac3c05365281"
+    sha256 cellar: :any,                 tahoe:         "90c345a174a631a157f7ea056fe41205fb77778e65d4bdc91097a3fb3a62faa6"
+    sha256 cellar: :any,                 sequoia:       "8b2443dfa62b9d28cf0321e0e670bb096b2680fe72739999228291f36018311f"
+    sha256 cellar: :any,                 sonoma:        "8b8656acd6f30bcbbb9a033ae840afea299c9f0852f71b7540492b0fe7a36742"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "575617c1532fe90e212c052fb14fcd4fa295890e3bc9ac69dc52404a04a95855"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3d5ca8948526a2e3a487db0cd0acec9f4b415d5a4b08cffe27e2ea0c339c9dbe"
+  end
+
   depends_on "cmake" => :build
   depends_on "lz4_dehancer"
-  depends_on "xz_dehancer"
+  depends_on "xz"
 
   on_linux do
     depends_on "zlib-ng-compat"
   end
 
-  def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
+  deny_network_access!
 
+  def install
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
@@ -67,6 +70,8 @@ class ZstdDehancer < Formula
                     *std_cmake_args
     system "cmake", "--build", "builddir"
     system "cmake", "--install", "builddir"
+
+    # "-DZSTD_BUILD_SHARED=ON" has been added by Dehancer
 
     # Prevent dependents from relying on fragile Cellar paths.
     # https://github.com/ocaml/ocaml/issues/12431

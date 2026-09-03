@@ -33,16 +33,6 @@ class LibpngDehancer < Formula
   end
 
   def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
-
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
@@ -51,12 +41,14 @@ class LibpngDehancer < Formula
     resource("pngtest.png").stage(buildpath) if OS.linux?
 
     system "./configure", "--enable-shared", "--disable-static", "--disable-silent-rules", *std_configure_args
+    # system "./configure", "--disable-silent-rules", *std_configure_args # changed by dehancer
     system "make"
     system "make", "test"
     system "make", "install"
 
     # Avoid rebuilds of dependants that hardcode this path.
     inreplace [ lib/"pkgconfig/libpng.pc", lib/"pkgconfig/libpng16.pc"], prefix, opt_prefix # dehancer: added lib/"pkgconfig/libpng16.pc"
+    # inreplace lib/"pkgconfig/libpng.pc", prefix, opt_prefix # changed by dehancer
   end
 
   test do

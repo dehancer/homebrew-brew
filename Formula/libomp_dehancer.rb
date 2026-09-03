@@ -1,11 +1,11 @@
 # https://github.com/Homebrew/homebrew-core/commits/main/Formula/lib/libomp.rb
-# ddbdc91ebe6bfebc03d41998fb4e1f811326e90f
+# a02349293200a472bc1c8d1e842a24cd0bc3beaa
 
 class LibompDehancer < Formula
   desc "LLVM's OpenMP runtime library"
   homepage "https://openmp.llvm.org/"
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.8/llvm-project-22.1.8.src.tar.xz"
-  sha256 "922f1817a0df7b1489272d18134ee0087a8b068828f87ac63b9861b1a9965888"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0/llvm-project-23.1.0.src.tar.xz"
+  sha256 "ab1f0e3ec52448c33e8782eaf0422504b87c7b016b22514653ee0d8fcee479ff"
   license "MIT"
   compatibility_version 1
 
@@ -25,16 +25,6 @@ class LibompDehancer < Formula
   end
 
   def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
-
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
@@ -52,6 +42,13 @@ class LibompDehancer < Formula
     system "cmake", "-S", "runtimes", "-B", "build/shared", *args, *std_cmake_args
     system "cmake", "--build", "build/shared"
     system "cmake", "--install", "build/shared"
+
+    # commented out by dehancer
+    # system "cmake", "-S", "runtimes", "-B", "build/static",
+    #                 "-DLIBOMP_ENABLE_SHARED=OFF",
+    #                 *args, *std_cmake_args
+    # system "cmake", "--build", "build/static"
+    # system "cmake", "--install", "build/static"
   end
 
   test do

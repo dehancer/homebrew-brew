@@ -18,16 +18,6 @@ class JasperDehancer < Formula
   depends_on "jpeg-turbo_dehancer"
 
   def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
-
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
@@ -52,8 +42,13 @@ class JasperDehancer < Formula
     system "cmake", "--build", "../build-shared"
     system "cmake", "--install", "../build-shared"
 
+    # commented out by Dehancer
+    # system "cmake", "-S", ".", "-B", "../build-static", "-DJAS_ENABLE_SHARED=OFF", *args, *std_cmake_args
+    # system "cmake", "--build", "../build-static"
+    # lib.install "../build-static/src/libjasper/libjasper.a"
+
     # Move the build directories into `buildpath` so Homebrew captures log files properly.
-    buildpath.install ["../build-shared"]
+    buildpath.install ["../build-shared"] # , "../build-static"] # static path removed by dehancer
 
     # Avoid rebuilding dependents that hard-code the prefix.
     inreplace lib/"pkgconfig/jasper.pc", prefix, opt_prefix

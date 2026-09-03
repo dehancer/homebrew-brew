@@ -1,33 +1,24 @@
 # https://github.com/Homebrew/homebrew-core/commits/main/Formula/lib/libdeflate.rb
-# 999f9ece7df2ee07fbb7c6c40c2e554068311259
+# 7c29703036e56bbf83ab7b0e5cee0a394e018fba
 
 class LibdeflateDehancer < Formula
   desc "Heavily optimized DEFLATE/zlib/gzip compression and decompression"
   homepage "https://github.com/ebiggers/libdeflate"
-  url "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.25.tar.gz"
-  sha256 "d11473c1ad4c57d874695e8026865e38b47116bbcb872bfc622ec8f37a86017d"
+  url "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.26.tar.gz"
+  sha256 "bba03fffc5538576213675ce6968fcff6ce2e67d82e4d5febea2d05f9f13cf85"
   license "MIT"
   compatibility_version 1
 
   depends_on "cmake" => :build
 
   def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
-
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
     system "cmake", "-S", ".", "-B", "build", "-DLIBDEFLATE_BUILD_SHARED_LIB=ON", "-DLIBDEFLATE_BUILD_STATIC_LIB=OFF", *std_cmake_args
+    # system "cmake", "-S", ".", "-B", "build", *std_cmake_args # changed by dehancer
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 

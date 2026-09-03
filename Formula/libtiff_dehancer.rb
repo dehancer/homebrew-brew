@@ -1,5 +1,5 @@
 # https://github.com/Homebrew/homebrew-core/commits/main/Formula/lib/libtiff.rb
-# 1cb6776af39a89c42fd1f0c39ad10ab8aa68854c
+# 6a8993c82c0e73e4be47b7c3aeb83a0de67abc79
 
 class LibtiffDehancer < Formula
   desc "TIFF library and utilities"
@@ -16,25 +16,17 @@ class LibtiffDehancer < Formula
   end
 
   depends_on "jpeg-turbo_dehancer"
+  depends_on "webp_dehancer"
   depends_on "xz_dehancer"
   depends_on "zstd_dehancer"
-  depends_on "webp_dehancer"
 
   on_linux do
     depends_on "zlib-ng-compat"
   end
 
-  def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
+  deny_network_access!
 
+  def install
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
@@ -53,6 +45,8 @@ class LibtiffDehancer < Formula
       --enable-shared
       --disable-static
     ]
+    # --enable-shared and --disable-static added by dehancer
+
     system "./configure", *args, *std_configure_args
     system "make", "install"
 

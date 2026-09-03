@@ -1,18 +1,18 @@
 # https://github.com/Homebrew/homebrew-core/commits/main/Formula/l/little-cms2.rb
-# 6845605ab5b1e7f841e98099da6eb646fa76a1f2
+# d862babb72a86f5d526428841c4960dc18e5321d
 
 class LittleCms2Dehancer < Formula
   desc "Color management engine supporting ICC profiles"
   homepage "https://www.littlecms.com/"
   # Ensure release is announced at https://www.littlecms.com/categories/releases/
   # (or https://www.littlecms.com/blog/)
-  url "https://downloads.sourceforge.net/project/lcms/lcms/2.19/lcms2-2.19.tar.gz"
-  sha256 "49e7e134e4299733dd0eda434fa468997a28ab3d33fa397c642b03644f552216"
+  url "https://downloads.sourceforge.net/project/lcms/lcms/2.19.1/lcms2-2.19.1.tar.gz"
+  sha256 "bfc54f7bab59fbc921012014a8032e4cba4abd46db47d46b76416a8c0b2815c8"
   license "MIT"
   version_scheme 1
   compatibility_version 1
 
- # The Little CMS website has been redesigned and there's no longer a
+  # The Little CMS website has been redesigned and there's no longer a
   # "Download" page we can check for releases. As of writing this, checking the
   # "Releases" blog posts seems to be our best option and we just have to hope
   # that the post URLs, headings, etc. maintain a consistent format.
@@ -25,22 +25,13 @@ class LittleCms2Dehancer < Formula
   depends_on "libtiff_dehancer"
 
   def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
-
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
     end
 
     system "./configure", "--disable-static", *std_configure_args
+    # system "./configure", *std_configure_args # changed by dehancer
     system "make", "install"
 
     # Avoid rebuilding dependents that hard-code the prefix.

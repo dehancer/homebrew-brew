@@ -28,16 +28,6 @@ class LibzipDehancer < Formula
   end
 
   def install
-    if File.exist?("/tmp/dehancer-homebrew-build-for-macos13.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="13.0"
-      ohai "[dehancer] Building formula for macOS 13"
-    elsif File.exist?("/tmp/dehancer-homebrew-build-for-macos15.txt")
-      ENV['MACOSX_DEPLOYMENT_TARGET']="15.0"
-      ohai "[dehancer] Building formula for macOS 15"
-    else
-      odie "[dehancer] You must specify a macOS deployment target by creating a flag file in /tmp"
-    end
-
     if ENV['HOMEBREW_OPTFLAGS']&.include?("westmere")
       ENV['HOMEBREW_OPTFLAGS']='-march=x86-64 -arch x86_64'
       ohai "[dehancer] HOMEBREW_OPTFLAGS value changed to: #{ENV["HOMEBREW_OPTFLAGS"]}"
@@ -53,6 +43,13 @@ class LibzipDehancer < Formula
       -DBUILD_OSSFUZZ=OFF
       -DBUILD_DOC=OFF
     ]
+
+    # The following added by dehancer:
+    # -DBUILD_SHARED_LIBS=ON
+    # -DBUILD_TOOLS=OFF
+    # -DBUILD_OSSFUZZ=OFF
+    # -DBUILD_DOC=OFF
+
     args << "-DENABLE_OPENSSL=OFF" if OS.mac? # Use CommonCrypto instead.
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args

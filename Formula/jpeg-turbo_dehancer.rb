@@ -1,4 +1,4 @@
-# https://github.com/Homebrew/homebrew-core/blob/main/Formula/j/jpeg-turbo.rb
+# https://github.com/Homebrew/homebrew-core/commits/main/Formula/j/jpeg-turbo.rb
 # f8c8c7a34ac43bba24523a1d8d09215249c4999b
 
 class JpegTurboDehancer < Formula
